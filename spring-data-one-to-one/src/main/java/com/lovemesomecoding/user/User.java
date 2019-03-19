@@ -2,19 +2,26 @@ package com.lovemesomecoding.user;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.lovemesomecoding.address.Address;
+import com.lovemesomecoding.laptop.Laptop;
 
 @JsonInclude(value = Include.NON_NULL)
 @Entity
@@ -39,6 +46,15 @@ public class User implements Serializable {
 
 	@Column(name = "age")
 	private int age;
+	
+	@JsonIgnoreProperties(value= {"user"})
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="address_id")
+	private Address address;
+	
+	@JsonIgnoreProperties(value= {"user"})
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="user")
+	private Laptop laptop;
 
 	public User() {
 		super();
@@ -73,6 +89,14 @@ public class User implements Serializable {
 		return age;
 	}
 
+	public Laptop getLaptop() {
+		return laptop;
+	}
+
+	public void setLaptop(Laptop laptop) {
+		this.laptop = laptop;
+	}
+
 	public void setAge(int age) {
 		this.age = age;
 	}
@@ -83,6 +107,14 @@ public class User implements Serializable {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override
