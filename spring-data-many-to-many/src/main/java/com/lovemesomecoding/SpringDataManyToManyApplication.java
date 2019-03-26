@@ -17,13 +17,13 @@ import org.springframework.core.env.Environment;
 import com.lovemesomecoding.user.UserLoader;
 
 @SpringBootApplication
-public class SpringDataOneToManyApplication {
-	
+public class SpringDataManyToManyApplication {
+
 	@Autowired
 	private UserLoader userLoader;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringDataOneToManyApplication.class, args);
+		SpringApplication.run(SpringDataManyToManyApplication.class, args);
 	}
 
 	@PostConstruct
@@ -44,7 +44,7 @@ public class SpringDataOneToManyApplication {
 				Environment env = ctx.getEnvironment();
 				String timeZone = "America/Los_Angeles";
 
-				System.out.println("************************ Spring Data - One-To-Many ***************************");
+				System.out.println("************************ Spring Data - Many-To-Many ***************************");
 				System.out.println("** Active Profile: " + Arrays.toString(env.getActiveProfiles()));
 				System.out.println("** Port: " + env.getProperty("server.port"));
 				System.out.println("** Build: " + "0.0.102");

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lovemesomecoding</groupId>
-	<artifactId>spring-data-one-to-many</artifactId>
+	<artifactId>spring-data-many-to-many</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-data-one-to-many</name>
+	<name>spring-data-many-to-many</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
