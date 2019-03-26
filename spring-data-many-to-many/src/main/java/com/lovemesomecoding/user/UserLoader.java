@@ -1,6 +1,7 @@
 package com.lovemesomecoding.user;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -13,6 +14,7 @@ import com.lovemesomecoding.address.Address;
 import com.lovemesomecoding.laptop.Laptop;
 import com.lovemesomecoding.order.Order;
 import com.lovemesomecoding.role.Role;
+import com.lovemesomecoding.role.RoleService;
 import com.lovemesomecoding.utils.ObjectUtils;
 import com.lovemesomecoding.utils.RandomGeneratorUtils;
 
@@ -23,6 +25,9 @@ public class UserLoader {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
 	
 //	@PostConstruct
 	public void loadUnidirectionalRelationship() {
@@ -121,5 +126,17 @@ public class UserLoader {
 		log.info("load from db: {}",ObjectUtils.toJson(user));
 		
 		log.info("User has been loaded!");
+		
+		List<User> users = userService.getAllUserByRole(Role.USER);
+		
+		for(User u : users) {
+			log.info("u: {}",ObjectUtils.toJson(u));
+			
+			List<Role> roles = roleService.getByUserId(u.getId());
+			
+			log.info("roles: {}",ObjectUtils.toJson(roles));
+		}
+		
+		
 	}
 }

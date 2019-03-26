@@ -67,6 +67,7 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<Order> orders;
 	
+	@JsonIgnoreProperties(value= {"users"})
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(
 	        name = "user_roles",
