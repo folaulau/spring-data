@@ -1,5 +1,6 @@
 package com.lovemesomecoding.user;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -36,6 +37,12 @@ public class UserServiceImp implements UserService{
 	public User getByUid(String uid) {
 		// TODO Auto-generated method stub
 		return userRepository.getByUid(uid);
+	}
+
+	@Override
+	public List<User> getAllUserByRole(String authority) {
+		// TODO Auto-generated method stub
+		return userRepository.findByRolesAuthority(authority);
 	}
 	
 }

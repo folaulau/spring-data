@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Role implements Serializable {
 	@Column(name = "authority")
 	private String authority;
 	
-	@ManyToMany(mappedBy="roles")
+	@ManyToMany(mappedBy="roles", fetch=FetchType.EAGER)
 	private Set<User> users;
 
 	public Role() {

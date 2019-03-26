@@ -1,5 +1,6 @@
 package com.lovemesomecoding.user;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -11,4 +12,6 @@ public interface UserService {
 	User getByUid(String uid);
 	
 	Optional<User> findByUid(String uid);
+	
+	List<User> getAllUserByRole(String authority);
 }
