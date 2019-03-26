@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.lovemesomecoding.address.Address;
 import com.lovemesomecoding.laptop.Laptop;
 import com.lovemesomecoding.order.Order;
+import com.lovemesomecoding.role.Role;
 
 @JsonInclude(value = Include.NON_NULL)
 @Entity
@@ -63,6 +66,13 @@ public class User implements Serializable {
 	@JsonIgnoreProperties(value= {"user"})
 	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<Order> orders;
+	
+	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(
+	        name = "user_roles",
+	        joinColumns = { @JoinColumn(name = "user_id") },
+	        inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	private Set<Role> roles;
 
 	public User() {
 		super();
@@ -138,6 +148,21 @@ public class User implements Serializable {
 			this.orders = new HashSet<>();
 		}
 		this.orders.add(order);
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
+	public void addRole(Role role) {
+		if(this.roles == null){
+			this.roles = new HashSet<>();
+		}
+		this.roles.add(role);
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.lovemesomecoding.address.Address;
 import com.lovemesomecoding.laptop.Laptop;
 import com.lovemesomecoding.order.Order;
+import com.lovemesomecoding.role.Role;
 import com.lovemesomecoding.utils.ObjectUtils;
 import com.lovemesomecoding.utils.RandomGeneratorUtils;
 
@@ -98,6 +99,16 @@ public class UserLoader {
 		order.setUser(user);
 		
 		user.addOrder(order);
+		
+		Role userRole = new Role();
+		userRole.setAuthority(Role.USER);
+		
+		user.addRole(userRole);
+		
+		Role adminRole = new Role();
+		adminRole.setAuthority(Role.ADMIN);
+		
+		user.addRole(adminRole);
 		
 		log.info("pre persist: {}",ObjectUtils.toJson(user));
 		
