@@ -38,7 +38,7 @@ public class Card implements Serializable {
 	@Column(name = "name")
 	private String name;
 
-	@JsonIgnoreProperties(value = { "user", "card" })
+	@JsonIgnoreProperties(value = { "card" })
 	@OneToMany(mappedBy = "card", fetch=FetchType.EAGER)
 	private Set<CardManager> cardManagers;
 

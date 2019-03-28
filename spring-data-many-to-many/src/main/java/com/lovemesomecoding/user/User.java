@@ -73,6 +73,10 @@ public class User implements Serializable {
 	@JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<Role> roles;
+	
+	@JsonIgnoreProperties(value = { "user" })
+	@OneToMany(mappedBy = "card", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private Set<CardManager> cardManagers;
 
 	@JsonIgnoreProperties(value = { "user", "card" })
 	@OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
@@ -176,6 +180,21 @@ public class User implements Serializable {
 
 	public void setCardManagers(Set<CardManager> cardManagers) {
 		this.cardManagers = cardManagers;
+	}
+
+	public Set<CardManager> getCardManagers() {
+		return cardManagers;
+	}
+
+	public void setCardManagers(Set<CardManager> cardManagers) {
+		this.cardManagers = cardManagers;
+	}
+	
+	public void addCardManager(CardManager cardManager) {
+		if(this.cardManagers == null){
+			this.cardManagers = new HashSet<>();
+		}
+		this.cardManagers.add(cardManager);
 	}
 
 	@Override

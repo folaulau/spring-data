@@ -75,7 +75,7 @@ public class SpringDataManyToManyApplication {
 			}
 			System.out.println("\n");
 			
-			userLoader.loadOneToManyBidirectionalRelationship();
+			userLoader.loadManyToManyRelationship();
 		};
 	}
 }

@@ -1,7 +1,7 @@
 package com.lovemesomecoding.cardmanager;
 
 import java.io.Serializable;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +34,7 @@ public class CardManager implements Serializable {
 	private double amountUsed;
 
 	@JsonIgnoreProperties(value = { "cardManagers" })
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "card_id")
 	private Card card;
 
