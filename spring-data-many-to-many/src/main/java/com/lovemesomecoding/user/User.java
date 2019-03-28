@@ -78,10 +78,6 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "card", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<CardManager> cardManagers;
 
-	@JsonIgnoreProperties(value = { "user", "card" })
-	@OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
-	private Set<CardManager> cardManagers;
-
 
 
 	public User() {
@@ -174,14 +170,6 @@ public class User implements Serializable {
 		}
 		this.roles.add(role);
 	}
-	public Set<CardManager> getCardManagers() {
-		return cardManagers;
-	}
-
-	public void setCardManagers(Set<CardManager> cardManagers) {
-		this.cardManagers = cardManagers;
-	}
-
 	public Set<CardManager> getCardManagers() {
 		return cardManagers;
 	}
