@@ -75,7 +75,7 @@ public class User implements Serializable {
 	private Set<Role> roles;
 
 	@JsonIgnoreProperties(value = { "user", "card" })
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
 	private Set<CardManager> cardManagers;
 
 
