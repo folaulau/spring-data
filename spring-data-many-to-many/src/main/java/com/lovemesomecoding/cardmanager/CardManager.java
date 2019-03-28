@@ -34,12 +34,12 @@ public class CardManager implements Serializable {
 	@Column(name = "amount_used")
 	private double amountUsed;
 
-	//@JsonIgnoreProperties(value = { "cardManagers" })
+	@JsonIgnoreProperties(value = { "cardManagers" })
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "card_id")
 	private Card card;
 
-	//@JsonIgnoreProperties(value = { "cardManagers" })
+	@JsonIgnoreProperties(value = { "cardManagers" })
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;

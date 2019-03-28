@@ -76,7 +76,7 @@ public class User implements Serializable {
 	        inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<Role> roles;
 	
-	//@JsonIgnoreProperties(value = { "user" })
+	@JsonIgnoreProperties(value = { "user" })
 	@OneToMany(mappedBy = "card", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<CardManager> cardManagers;
 

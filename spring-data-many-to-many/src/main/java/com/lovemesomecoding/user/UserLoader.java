@@ -2,6 +2,7 @@ package com.lovemesomecoding.user;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.lovemesomecoding.address.Address;
 import com.lovemesomecoding.card.Card;
 import com.lovemesomecoding.cardmanager.CardManager;
+import com.lovemesomecoding.cardmanager.CardManagerRepository;
 import com.lovemesomecoding.laptop.Laptop;
 import com.lovemesomecoding.order.Order;
 import com.lovemesomecoding.role.Role;
@@ -30,6 +32,9 @@ public class UserLoader {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private CardManagerRepository cardManagerRepository;
 	
 //	@PostConstruct
 	public void loadUnidirectionalRelationship() {
@@ -165,9 +170,24 @@ public class UserLoader {
 		
 		log.info("post persist: {}",ObjectUtils.toJson(user));
 		
+		
+		user.getCardManagers().forEach((cm)->{
+			
+			
+			Optional<CardManager> optCM = cardManagerRepository.findById(cm.getId());
+			
+			optCM.ifPresent((carm)->{
+				log.info(ObjectUtils.toJson(carm));
+			});
+		});
+		
 		user = userService.getById(user.getId());
 		
 		log.info("load from db: {}",ObjectUtils.toJson(user));
+		
+		cardManager = cardManagerRepository.findByUserId(user.getId());
+		
+		log.info("cardManager: {}",ObjectUtils.toJson(cardManager));
 		
 		log.info("User has been loaded!");
 		
