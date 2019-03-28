@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.lovemesomecoding.address.Address;
+import com.lovemesomecoding.cardmanager.CardManager;
 import com.lovemesomecoding.laptop.Laptop;
 import com.lovemesomecoding.order.Order;
 import com.lovemesomecoding.role.Role;
@@ -41,8 +42,8 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, updatable = false, unique = true)
 	private Long id;
-	
-	@Column(name = "uid", unique = true, nullable=false, updatable=false)
+
+	@Column(name = "uid", unique = true, nullable = false, updatable = false)
 	private String uid;
 
 	@Column(name = "name")
@@ -53,27 +54,31 @@ public class User implements Serializable {
 
 	@Column(name = "age")
 	private int age;
-	
-	@JsonIgnoreProperties(value= {"user"})
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="address_id")
+
+	@JsonIgnoreProperties(value = { "user" })
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
 	private Address address;
-	
-	@JsonIgnoreProperties(value= {"user"})
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="user")
+
+	@JsonIgnoreProperties(value = { "user" })
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
 	private Laptop laptop;
-	
-	@JsonIgnoreProperties(value= {"user"})
-	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+
+	@JsonIgnoreProperties(value = { "user" })
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Order> orders;
-	
-	@JsonIgnoreProperties(value= {"users"})
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(
-	        name = "user_roles",
-	        joinColumns = { @JoinColumn(name = "user_id") },
-	        inverseJoinColumns = { @JoinColumn(name = "role_id") })
+
+	@JsonIgnoreProperties(value = { "users" })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
 	private Set<Role> roles;
+
+	@JsonIgnoreProperties(value = { "user", "card" })
+	@OneToMany(mappedBy = "user")
+	private Set<CardManager> cardManagers;
+
+
 
 	public User() {
 		super();
@@ -143,9 +148,9 @@ public class User implements Serializable {
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
-	
+
 	public void addOrder(Order order) {
-		if(this.orders == null){
+		if (this.orders == null) {
 			this.orders = new HashSet<>();
 		}
 		this.orders.add(order);
@@ -158,12 +163,19 @@ public class User implements Serializable {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 	public void addRole(Role role) {
-		if(this.roles == null){
+		if (this.roles == null) {
 			this.roles = new HashSet<>();
 		}
 		this.roles.add(role);
+	}
+	public Set<CardManager> getCardManagers() {
+		return cardManagers;
+	}
+
+	public void setCardManagers(Set<CardManager> cardManagers) {
+		this.cardManagers = cardManagers;
 	}
 
 	@Override
@@ -190,8 +202,8 @@ public class User implements Serializable {
 			return false;
 		}
 		User other = (User) obj;
-		return new EqualsBuilder().append(this.id, other.id).append(this.email, other.email)
-				.append(this.uid, other.uid).isEquals();
+		return new EqualsBuilder().append(this.id, other.id).append(this.email, other.email).append(this.uid, other.uid)
+				.isEquals();
 	}
 
 }
