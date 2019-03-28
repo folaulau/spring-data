@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.lovemesomecoding.address.Address;
+import com.lovemesomecoding.cardmanager.CardManager;
 import com.lovemesomecoding.laptop.Laptop;
 import com.lovemesomecoding.order.Order;
 import com.lovemesomecoding.role.Role;
@@ -74,6 +75,10 @@ public class User implements Serializable {
 	        joinColumns = { @JoinColumn(name = "user_id") },
 	        inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<Role> roles;
+	
+	//@JsonIgnoreProperties(value = { "user" })
+	@OneToMany(mappedBy = "card", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private Set<CardManager> cardManagers;
 
 	public User() {
 		super();
@@ -164,6 +169,21 @@ public class User implements Serializable {
 			this.roles = new HashSet<>();
 		}
 		this.roles.add(role);
+	}
+
+	public Set<CardManager> getCardManagers() {
+		return cardManagers;
+	}
+
+	public void setCardManagers(Set<CardManager> cardManagers) {
+		this.cardManagers = cardManagers;
+	}
+	
+	public void addCardManager(CardManager cardManager) {
+		if(this.cardManagers == null){
+			this.cardManagers = new HashSet<>();
+		}
+		this.cardManagers.add(cardManager);
 	}
 
 	@Override

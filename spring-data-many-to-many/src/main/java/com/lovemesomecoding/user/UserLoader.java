@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lovemesomecoding.address.Address;
+import com.lovemesomecoding.card.Card;
+import com.lovemesomecoding.cardmanager.CardManager;
 import com.lovemesomecoding.laptop.Laptop;
 import com.lovemesomecoding.order.Order;
 import com.lovemesomecoding.role.Role;
@@ -137,6 +139,37 @@ public class UserLoader {
 			log.info("roles: {}",ObjectUtils.toJson(roles));
 		}
 		
+	}
+	
+	public void loadManyToManyRelationship() {
+		log.info("loadManyToManyRelationship()");
+		
+		User user = new User();
+		//user.setId(new Long(55));
+		user.setUid(RandomGeneratorUtils.getUuid());
+		user.setAge(21);
+		user.setName("Folau");
+		user.setEmail("folaukaveinga@gmail.com");
+		
+		Card card = new Card();
+		card.setBrand("Visa");
+		card.setName("Folau Kaveinga");
+		
+		CardManager cardManager = new CardManager();
+		cardManager.setCard(card);
+		cardManager.setUser(user);
+		
+		user.addCardManager(cardManager);
+		
+		user = userService.create(user);
+		
+		log.info("post persist: {}",ObjectUtils.toJson(user));
+		
+		user = userService.getById(user.getId());
+		
+		log.info("load from db: {}",ObjectUtils.toJson(user));
+		
+		log.info("User has been loaded!");
 		
 	}
 }
