@@ -47,6 +47,7 @@ public class UserLoader {
 		pm.setUser(user);
 		pm.setBrand("VISA");
 		pm.setLast4("3421");
+		pm.setName("Folau Kaveinga");
 		
 		pm = paymentMethodService.save(pm);
 		
@@ -54,8 +55,9 @@ public class UserLoader {
 		
 		pm = new PaymentMethod();
 		pm.setUser(user);
-		pm.setBrand("APPLE");
+		pm.setBrand("Capital One");
 		pm.setLast4("3948");
+		pm.setName("Folau Kaveinga");
 		
 		pm = paymentMethodService.save(pm);
 		

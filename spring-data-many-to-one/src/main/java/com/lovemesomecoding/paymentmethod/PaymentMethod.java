@@ -29,6 +29,9 @@ public class PaymentMethod implements Serializable {
 	@Column(name = "id", nullable = false, updatable = false, unique = true)
 	private Long id;
 	
+	@Column(name = "name")
+	private String name;
+	
 	@Column(name = "brand")
 	private String brand;
 	
@@ -75,6 +78,13 @@ public class PaymentMethod implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }
