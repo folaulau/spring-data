@@ -25,6 +25,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.lovemesomecoding.car.Car;
 
 @JsonInclude(value = Include.NON_NULL)
 @Entity
@@ -50,6 +51,9 @@ public class User implements Serializable {
 	@Column(name = "age")
 	private int age;
 	
+	@JsonIgnoreProperties(value= {"user"})
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<Car> cars;
 
 	public User() {
 		super();
@@ -94,6 +98,21 @@ public class User implements Serializable {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public Set<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(Set<Car> cars) {
+		this.cars = cars;
+	}
+	
+	public void addCar(Car car) {
+		if(this.cars == null){
+			this.cars = new HashSet<>();
+		}
+		this.cars.add(car);
 	}
 
 	@Override

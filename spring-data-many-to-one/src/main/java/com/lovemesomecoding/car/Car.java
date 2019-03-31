@@ -1,4 +1,4 @@
-package com.lovemesomecoding.paymentmethod;
+package com.lovemesomecoding.car;
 
 import java.io.Serializable;
 
@@ -19,8 +19,8 @@ import com.lovemesomecoding.user.User;
 
 @JsonInclude(value = Include.NON_NULL)
 @Entity
-@Table(name = "payment_method")
-public class PaymentMethod implements Serializable {
+@Table(name = "car")
+public class Car implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,24 +35,36 @@ public class PaymentMethod implements Serializable {
 	@Column(name = "brand")
 	private String brand;
 	
-	@Column(name = "last4")
-	private String last4;
+	@Column(name = "model")
+	private String model;
 	
+	@Column(name = "price")
+	private Double price;
+	
+	@JsonIgnoreProperties(value= {"cars"})
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable=false)
 	private User user;
-
-	public PaymentMethod() {
+	
+	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	// getters and setters
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getBrand() {
@@ -63,12 +75,20 @@ public class PaymentMethod implements Serializable {
 		this.brand = brand;
 	}
 
-	public String getLast4() {
-		return last4;
+	public String getModel() {
+		return model;
 	}
 
-	public void setLast4(String last4) {
-		this.last4 = last4;
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public User getUser() {
@@ -78,13 +98,7 @@ public class PaymentMethod implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 	
+	
+
 }
