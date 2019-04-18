@@ -44,7 +44,7 @@ public class SpringDataManyToManyApplication {
 				Environment env = ctx.getEnvironment();
 				String timeZone = "America/Los_Angeles";
 
-				System.out.println("************************ Spring Data - Many-To-Many ***************************");
+				System.out.println("************************ Spring Data - DTO ***************************");
 				System.out.println("** Active Profile: " + Arrays.toString(env.getActiveProfiles()));
 				System.out.println("** Port: " + env.getProperty("server.port"));
 				System.out.println("** Build: " + "0.0.102");
@@ -74,8 +74,6 @@ public class SpringDataManyToManyApplication {
 				System.err.println("Exception, commandlineRunner -> " + e.getMessage());
 			}
 			System.out.println("\n");
-			
-			userLoader.loadManyToManyRelationship();
 		};
 	}
 }

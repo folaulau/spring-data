@@ -9,6 +9,8 @@ public interface UserService {
 	
 	User getById(Long id);
 	
+	User getProfileById(Long id);
+	
 	User getByUid(String uid);
 	
 	Optional<User> findByUid(String uid);
