@@ -69,13 +69,11 @@ public class UserServiceImp implements UserService {
 		return userMapper.userDtoToUser(userDto);
 	}
 
-	
 	@Override
 	public UserFullDto getUserFullDtoById(Long userId) {
 
 		String searchQuery = "SELECT u.name, u.email, u.age, addr.state FROM user as u JOIN address as addr ON u.address_id = addr.id WHERE u.id = :id";
 
-		
 		@SuppressWarnings("deprecation")
 		Query query = this.entityManager.createNativeQuery(searchQuery).unwrap(org.hibernate.query.Query.class)
 				.setResultTransformer(new AliasToBeanResultTransformer(UserFullDto.class));
@@ -85,16 +83,22 @@ public class UserServiceImp implements UserService {
 		UserFullDto result = (UserFullDto) query.getSingleResult();
 
 		log.info("AliasToBeanResultTransformer result: {}", ObjectUtils.toJson(result));
-		
-		
+
 		// named query
-		
+
 		TypedQuery<User> typedQuery = this.entityManager.createNamedQuery("getAllUsers", User.class);
-		
+
 		List<User> users = typedQuery.getResultList();
-		
+
 		log.info("namedQuery users: {}", ObjectUtils.toJson(users));
+
+		typedQuery = this.entityManager.createNamedQuery("getUserById", User.class);
+		typedQuery.setParameter("id", userId);
 		
+		User user = typedQuery.getSingleResult();
+
+		log.info("namedQuery user: {}", ObjectUtils.toJson(user));
+
 		return result;
 	}
 
@@ -115,13 +119,13 @@ public class UserServiceImp implements UserService {
 							public UserFullDto transformTuple(Object[] tuple, String[] aliases) {
 
 								UserFullDto dto = new UserFullDto();
-								
+
 								dto.setName((String) tuple[0]);
 
 								dto.setEmail((String) tuple[1]);
 
 								dto.setAge((int) tuple[2]);
-								
+
 								dto.setZipcode((String) tuple[4]);
 
 								return dto;
