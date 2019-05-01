@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lovemesomecoding.address.Address;
-import com.lovemesomecoding.role.Role;
-import com.lovemesomecoding.role.RoleService;
 import com.lovemesomecoding.user.User;
 import com.lovemesomecoding.user.UserService;
 import com.lovemesomecoding.utils.ObjectUtils;
@@ -56,5 +54,9 @@ public class UserLoader {
 		log.info("retrieve: {}",ObjectUtils.toJson(user));
 		
 		log.info("User has been loaded!");
+		
+		userService.getUserFullDtoById(user.getId());
+		
+		userService.getUserFullDtoByUid(user.getUid());
 	}
 }

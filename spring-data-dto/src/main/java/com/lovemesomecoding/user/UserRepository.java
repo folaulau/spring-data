@@ -17,8 +17,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	User getByUid(String uid);
 	
-	List<User> findByRolesAuthority(String authority);
-	
 	@Query("select new com.lovemesomecoding.dto.UserDto(user.uid,user.name,user.email,user.age) from User user where user.id = :id")
     UserDto getUserProfile(@Param("id") Long id);
 	

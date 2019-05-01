@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,11 +28,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.lovemesomecoding.address.Address;
-import com.lovemesomecoding.role.Role;
 
 @JsonInclude(value = Include.NON_NULL)
 @Entity
 @Table(name = "user")
+
+@NamedNativeQueries( {
+    @NamedNativeQuery(
+        name = "getAllUsers",
+        query = "SELECT id, name, email, age, address_id, uid FROM user",
+        resultClass=User.class
+        
+    ),
+    @NamedNativeQuery(
+        name = "getAllUserById",
+        query = "SELECT u.id, u.name, u.email " +
+                    "FROM user as u " +
+                    "WHERE u.id = :id ",
+                    resultClass=User.class
+    )
+})
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -56,14 +73,6 @@ public class User implements Serializable {
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="address_id")
 	private Address address;
-	
-	@JsonIgnoreProperties(value= {"users"})
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(
-	        name = "user_roles",
-	        joinColumns = { @JoinColumn(name = "user_id") },
-	        inverseJoinColumns = { @JoinColumn(name = "role_id") })
-	private Set<Role> roles;
 
 	public User() {
 		super();
@@ -116,21 +125,6 @@ public class User implements Serializable {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-	
-	public void addRole(Role role) {
-		if(this.roles == null){
-			this.roles = new HashSet<>();
-		}
-		this.roles.add(role);
 	}
 
 	@Override

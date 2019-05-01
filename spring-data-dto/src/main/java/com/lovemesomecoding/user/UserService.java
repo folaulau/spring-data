@@ -3,6 +3,8 @@ package com.lovemesomecoding.user;
 import java.util.List;
 import java.util.Optional;
 
+import com.lovemesomecoding.dto.UserFullDto;
+
 public interface UserService {
 	
 	User create(User user);
@@ -14,6 +16,9 @@ public interface UserService {
 	User getByUid(String uid);
 	
 	Optional<User> findByUid(String uid);
+
 	
-	List<User> getAllUserByRole(String authority);
+	UserFullDto getUserFullDtoById(Long userId);
+	
+	UserFullDto getUserFullDtoByUid(String uid);
 }
