@@ -41,10 +41,10 @@ import com.lovemesomecoding.address.Address;
         
     ),
     @NamedNativeQuery(
-        name = "getAllUserById",
-        query = "SELECT u.id, u.name, u.email " +
-                    "FROM user as u " +
-                    "WHERE u.id = :id ",
+        name = "getUserById",
+        query = "SELECT id, name, email, age, address_id, uid " +
+                    "FROM user " +
+                    "WHERE id = :id ",
                     resultClass=User.class
     )
 })
