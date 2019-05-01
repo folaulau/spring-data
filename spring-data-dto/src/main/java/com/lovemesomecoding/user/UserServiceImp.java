@@ -116,17 +116,21 @@ public class UserServiceImp implements UserService {
 							private static final long serialVersionUID = -1L;
 
 							@Override
-							public UserFullDto transformTuple(Object[] tuple, String[] aliases) {
+							public UserFullDto transformTuple(Object[] tuples, String[] aliases) {
+								
+								log.info("tuples: {}",ObjectUtils.toJson(tuples));
+								
+								log.info("aliases: {}",ObjectUtils.toJson(aliases));
 
 								UserFullDto dto = new UserFullDto();
 
-								dto.setName((String) tuple[0]);
+								dto.setName((String) tuples[0]);
 
-								dto.setEmail((String) tuple[1]);
+								dto.setEmail((String) tuples[1]);
 
-								dto.setAge((int) tuple[2]);
+								dto.setAge((int) tuples[2]);
 
-								dto.setZipcode((String) tuple[4]);
+								dto.setZipcode((String) tuples[4]);
 
 								return dto;
 							}
