@@ -72,7 +72,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public UserFullDto getUserFullDtoById(Long userId) {
 
-		String searchQuery = "SELECT u.name, u.email, u.age, addr.state FROM user as u JOIN address as addr ON u.address_id = addr.id WHERE u.id = :id";
+		String searchQuery = "SELECT u.name, u.email, u.age, addr.state, addr.zipcode as zip FROM user as u JOIN address as addr ON u.address_id = addr.id WHERE u.id = :id";
 
 		@SuppressWarnings("deprecation")
 		Query query = this.entityManager.createNativeQuery(searchQuery).unwrap(org.hibernate.query.Query.class)
@@ -116,17 +116,21 @@ public class UserServiceImp implements UserService {
 							private static final long serialVersionUID = -1L;
 
 							@Override
-							public UserFullDto transformTuple(Object[] tuple, String[] aliases) {
+							public UserFullDto transformTuple(Object[] tuples, String[] aliases) {
+								
+								log.info("tuples: {}",ObjectUtils.toJson(tuples));
+								
+								log.info("aliases: {}",ObjectUtils.toJson(aliases));
 
 								UserFullDto dto = new UserFullDto();
 
-								dto.setName((String) tuple[0]);
+								dto.setName((String) tuples[0]);
 
-								dto.setEmail((String) tuple[1]);
+								dto.setEmail((String) tuples[1]);
 
-								dto.setAge((int) tuple[2]);
+								dto.setAge((int) tuples[2]);
 
-								dto.setZipcode((String) tuple[4]);
+								dto.setZipcode((String) tuples[4]);
 
 								return dto;
 							}
