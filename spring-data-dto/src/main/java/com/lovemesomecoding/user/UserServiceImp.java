@@ -72,7 +72,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public UserFullDto getUserFullDtoById(Long userId) {
 
-		String searchQuery = "SELECT u.name, u.email, u.age, addr.state FROM user as u JOIN address as addr ON u.address_id = addr.id WHERE u.id = :id";
+		String searchQuery = "SELECT u.name, u.email, u.age, addr.state, addr.zipcode as zip FROM user as u JOIN address as addr ON u.address_id = addr.id WHERE u.id = :id";
 
 		@SuppressWarnings("deprecation")
 		Query query = this.entityManager.createNativeQuery(searchQuery).unwrap(org.hibernate.query.Query.class)
