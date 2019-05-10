@@ -2,6 +2,7 @@ package com.lovemesomecoding.utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -66,12 +67,8 @@ public final class RandomGeneratorUtils {
 	}
 
 	// 20 characters 4 pieces to ensure uniqueness
-	public static String getUuid() {
-		StringBuilder uuid = new StringBuilder();
-		for (int i = 0; i < 4; i++) {
-			uuid.append(RandomStringUtils.randomAlphabetic(5));
-		}
-		return uuid.toString();
+	public static String getUserUuid() {
+		return "user-"+UUID.randomUUID().toString()+"-"+RandomStringUtils.randomAlphabetic(10);
 	}
 
 	public static boolean getBoolean() {

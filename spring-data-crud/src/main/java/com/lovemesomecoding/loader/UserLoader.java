@@ -63,7 +63,7 @@ public class UserLoader {
 
 	public User createUser() {
 		User user = new User();
-		user.setUid(RandomGeneratorUtils.getUuid());
+		user.setUid(RandomGeneratorUtils.getUserUuid());
 		user.setDob(DateUtils.addYears(new Date(), 12));
 		user.setName("Folau");
 		user.setEmail("folaukaveinga@gmail.com");
