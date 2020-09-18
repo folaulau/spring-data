@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.kaveinga.address.Address;
 import com.kaveinga.user.User;
 import com.kaveinga.user.UserRepository;
+import com.kaveinga.utils.ObjectUtils;
 
 @Component
 public class UserLoader {
@@ -20,7 +21,7 @@ public class UserLoader {
         for (int i = 0; i < 10; i++) {
             User user = new User();
             user.setUid("fb61971f-3386-4170-bbb2-b65a9a93db54" + (i + 1));
-            user.setAge(5);
+            user.setAge((i + 1));
             user.setEmail("folaudev+" + (i + 1) + "@gmail.com");
             user.setName("Folau Kaveinga");
 
@@ -32,7 +33,9 @@ public class UserLoader {
 
             user.setAddress(address);
 
-            userRepository.saveAndFlush(user);
+            user = userRepository.saveAndFlush(user);
+
+            System.out.println(ObjectUtils.toJson(user));
         }
     }
 }
